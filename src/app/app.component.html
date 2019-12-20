@@ -1,0 +1,24 @@
+<div>
+  <h1>
+    image-compress-multiple-file
+  </h1>
+</div>
+
+<div>
+
+  <button (click)="compressFile()">Upload and compress multiple Image</button>
+<div *ngFor="let item of imgResultBeforeCompress;let i = index;">
+  -----------------------------------------------------
+  <span >
+  <h1>before</h1>
+  <img *ngIf="imgResultBeforeCompress[i]" class="responsive" [src]="imgResultBeforeCompress[i]" alt="">
+  </span>
+  <span  >
+  <h1>After</h1>
+  <img *ngIf="imgResultAfterCompress[i]" class="responsive" [src]="imgResultAfterCompress[i]" alt="">
+  </span>
+
+  <div style="float: unset;"></div>
+  </div>
+</div>
+
