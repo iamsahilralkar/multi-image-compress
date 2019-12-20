@@ -1,9 +1,9 @@
 {
-  "name": "ngx-image-compress-test",
-  "version": "8.0.3",
-  "author": "dfa",
+  "name": "multi-image-compress",
+  "version": "1.0.0",
+  "author": "Sahil Ralkar",
   "license": "MIT",
-  "repository": "https://github.com/dfa1234/ngx-image-compress",
+  "repository": "https://github.com/svralkar30/multi-image-compress",
   "keywords": [
     "angular",
     "image",
