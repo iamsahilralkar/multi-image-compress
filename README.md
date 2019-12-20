@@ -1,16 +1,15 @@
 ## ngx-image-compress
 
-Angular utility for compressing images to a satisfying size, that you can choose
+Added multiple file support to compress
 
 
 ### Import
 ```sh
-npm i ngx-image-compress
+npm i multi-image-compress
 ```
 
 ### Usage
 
-Example here: https://stackblitz.com/edit/ngx-compress-sample 
 
 Import it in your app module
 
@@ -42,36 +41,41 @@ import {NgxImageCompressService} from 'ngx-image-compress';
 @Component({
   selector: 'app-root',
   template: `
-    <div>
-      <button (click)="compressFile()">Upload and compress Image</button>
-      <img *ngIf="imgResultBeforeCompress" [src]="imgResultBeforeCompress" alt="">
-      <img *ngIf="imgResultAfterCompress" [src]="imgResultAfterCompress" alt="">
-    </div>
+    <<div *ngFor="let item of imgResultBeforeCompress;let i = index;">
+  -----------------------------------------------------
+  <span >
+  <h1>before</h1>
+  <img *ngIf="imgResultBeforeCompress[i]" class="responsive" [src]="imgResultBeforeCompress[i]" alt="">
+  </span>
+  <span  >
+  <h1>After</h1>
+  <img *ngIf="imgResultAfterCompress[i]" class="responsive" [src]="imgResultAfterCompress[i]" alt="">
+  </span>
+
+  <div style="float: unset;"></div>
+  </div>
   `
 })
 export class AppComponent {
 
   constructor(private imageCompress: NgxImageCompressService) {}
   
-  imgResultBeforeCompress:string;
-  imgResultAfterCompress:string;
+  imgResultBeforeCompress = [];
+  imgResultAfterCompress = [];
 
-  compressFile() {
-  
-    this.imageCompress.uploadFile().then(({image, orientation}) => {
-    
-      this.imgResultBeforeCompress = image;
-      console.warn('Size in bytes was:', this.imageCompress.byteCount(image));
-      
-      this.imageCompress.compressFile(image, orientation, 50, 50).then(
+ compressFile() {
+    this.imageCompress.uploadFile().then(({images, orientation}) => {
+      this.imgResultBeforeCompress = images;
+      for(let i = 0; i < images.length; i++){
+      console.warn('Size in bytes was:', this.imageCompress.byteCount(images[i]));
+      this.imageCompress.compressFile(images[i], orientation, 50, 50).then(
         result => {
-          this.imgResultAfterCompress = result;
+          this.imgResultAfterCompress.push(result);
           console.warn('Size in bytes is now:', this.imageCompress.byteCount(result));
         }
       );
-      
+      }
     });
-    
   }
 }
 ```
@@ -84,22 +88,8 @@ In fact you can use the static version into the library and import renderer by y
 
 ## Updates
 
-#### 2019/07/01
 
-Update to Angular 8 (angular 7 is enough)  
-Fix DOC_ORIENTATION import (not a required import)
-
-#### 2019/01/09
-
-Since Angular 6 include its own packaging system, I no longer need my webpack config to build it.
-Everything is working in angular 7 without complaint now (test app is on github)
-
-#### 2018/10/04
-
-Adding Live example.
-Everything is now working and tested but I will make some arrangement to the code in `index.ts` before submitting it again to `npm`, in order to make it more handy.
-
-#### 2017/12/06
+#### 20/12/2019
 
 Upload to Github
 Need some fixes and tests to be use as a static library
